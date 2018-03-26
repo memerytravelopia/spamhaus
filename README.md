@@ -1,16 +1,10 @@
+</pre>
 ## Spamhaus DROP List ##
  A shell script that grabs the latest Spamhaus ipv4 & ipv6 DROP Lists and adds them to ipsets and iptables/ip6tables rules. 
 
 ## Usage Debian with ipset & netfilter-persistent  ##
 
 Place the script in /etc/iptables/ on your server.
-
-<pre>
-# find a nice home
-cd /home/YOUR-USERNAME/bin/
-
-# create the file and paste
-vim spamhaus.sh
 
 # make it executable
 chmod +x spamhaus.sh
