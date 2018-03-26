@@ -37,9 +37,8 @@ else
 
     # logging
     $IPTABLES -A INPUT -m set --match-set $CHAIN src -j LOG --log-prefix  "[SPAMHAUS BLOCK]" -m limit --limit 3/min --limit-burst 10
-   # -A SSHBRUTE -m recent --name SSH --update --seconds 300 --hitcount 10 -m limit --limit 1/second --limit-burst 100 -j LOG --log-prefix "iptables[SSH-brute]: "
-
-   # tie chain to input rules so it runs
+  
+    # tie chain to input rules so it runs
     $IPTABLES -A INPUT -m set --match-set $CHAIN src -j DROP
 
     echo "Chain not detected. Creating new chain and adding Spamhaus list...."
