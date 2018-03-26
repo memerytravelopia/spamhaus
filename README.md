@@ -1,8 +1,9 @@
 ## Spamhaus DROP List ##
-A shell script that grabs the latest Spamhaus DROP List and adds it to iptables. We use this (among other tools) on our Ubuntu proxy server at [AppThemes](http://www.appthemes.com/) to cut down on spam and other malicious activity.
+ A shell script that grabs the latest Spamhaus ipv4 & ipv6 DROP Lists and adds them to ipsets and iptables/ip6tables rules. 
 
-## Usage ##
-Place the script somewhere on your server.
+## Usage Debian with ipset & netfilter-persistent  ##
+
+Place the script in /etc/iptables/ on your server.
 
 <pre>
 # find a nice home
@@ -28,12 +29,17 @@ In order for the list to automatically update each day, you'll need to setup a c
 crontab -e
 
 # run the script every day at 3am
-0 3 * * * /home/YOUR-USERNAME/bin/spamhaus.sh
+0 3 * * * /etc/spamhaus.sh
 </pre>
 
 
 ## Troubleshooting ##
 If you need to remove all the Spamhaus rules, run the following:
 <pre>
+#ipset
+ipset flush spamhaus.v4
+ipset flush spamhaus.v6
+#iptables
 sudo iptables -F Spamhaus
+sudo ip6tables -F Spamhaus
 </pre>
