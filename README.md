@@ -5,16 +5,17 @@ __
 
 ## Usage Debian with ipset & netfilter-persistent  ##
 
-Place the script in /etc/iptables/ on your server.
+Place the files in /etc/iptables/ on your server.
 
-# make it executable
-chmod +x spamhaus.sh
+# make the spamhaus.xx.ipset executable
+chmod +x spamhaus.v4.ipset && chmod +x spamhaus.v6.ipset
 
 # set it loose
-sudo ./spamhaus.sh
+sudo ./spamhaus.v4.ipset && sudo ./spamhaus.v6.ipset
 
 # confirm the rules have been added
-sudo iptables -L Spamhaus -n
+iptables -nL |grep spamhaus && ip6tables -nL |grep spamhaus
+
 </pre>
 
 ## Automatic Updating ##
@@ -24,7 +25,8 @@ In order for the list to automatically update each day, you'll need to setup a c
 crontab -e
 
 # run the script every day at 3am
-0 3 * * * /etc/spamhaus.sh
+0 3 * * * /etc/spamhaus.v4.ipset
+0 3 * * * /etc/spamhaus.v6.ipset
 </pre>
 
 
@@ -34,7 +36,4 @@ If you need to remove all the Spamhaus rules, run the following:
 #ipset
 ipset flush spamhaus.v4
 ipset flush spamhaus.v6
-#iptables
-sudo iptables -F Spamhaus
-sudo ip6tables -F Spamhaus
 </pre>
